@@ -8,15 +8,15 @@
       <!--</div>-->
       <div class="headSearchInput" @click="goCommodity">
         <!--<i-input i-class="headSeachISearch" placeholder="请输入收货人姓名" />-->
-        <input class="headSeachISearch" type="search" placeholder="请输入收货人姓名">
+        <input class="headSeachISearch" type="search" placeholder="请输入商品名称">
       </div>
     </div>
 
     <div class="banner" @click="testCommodity">
-      <img src="/static/img/banner.png" alt="banner">
+      <img src="/static/img/banner1.png" alt="banner">
     </div>
 
-    <div class="menu">
+    <!-- <div class="menu">
       <div class="menuContent">
         <div class="menuContentList">
           <img src="/static/img/gssc.png" alt="gssc">
@@ -28,7 +28,7 @@
           <img src="/static/img/qbms.png" alt="qbms">
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="main">
       <!--<div class="loading" v-show="loadingShow">-->
@@ -72,18 +72,16 @@
               <div class="shopActivityiconJ">折</div>
               <p>{{item.fold}}</p>
             </div>
-
           </div>
-
-          <div class="shopping">
+          <!-- <div class="shopping">
             <div class="shoppingContent" v-for="(itemShoop, itemIndex) in item.shopping" :key="itemIndex">
               <div class="shoppingContentImg">
                 <img :src="itemShoop.shoopingImg" :alt="item.shoopimgAlt">
               </div>
               <p class="shoppingContentTitle">{{itemShoop.shoopingTitle}}</p>
-              <p class="shoppingContentM"><span class="shoppingContentMA">{{itemShoop.shoopingMa}}￥</span><span class="shoppingContentMB">{{itemShoop.shoopingMb}}</span></p>
+              <p class="shoppingContentM"><span class="shoppingContentMA">￥{{itemShoop.shoopingMa}}</span><span>&nbsp;</span><span class="shoppingContentMB">{{itemShoop.shoopingMb}}</span&nbsp;&nbsp;></p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div>
@@ -94,43 +92,103 @@
 </template>
 
 <script>
-let Fly = require('flyio/dist/npm/wx')
-let fly = new Fly()
+// let Fly = require('flyio/dist/npm/wx')
+// let fly = new Fly()
 
 export default {
   data () {
     return {
       loadingShow: true,
-      merchant: []
-    }
-  },
-
-  created () {
-    this.getMerchant()
-  },
-  methods: {
-    getMerchant () {
-      let _this = this
-      fly.get('https://easy-mock.com/mock/5b69315d99b4c7086b576bf0/merchant')
-        .then(function (response) {
-          if (response.status === 200) {
-            let merchant = response.data
-            console.log(merchant.data)
-            _this.loadingShow = false
-            _this.merchant = merchant.data
-          }
-        })
-        .catch(function (err) {
-          _this.loadingShow = true
-          console.log(err)
-        })
-    },
-    testCommodity () {
-      wx.navigateTo({
-        url: '/pages/address/main'
-      })
+      merchant: [
+        {
+          logo: '/static/img/logoFor.jpg',
+          logoalt: '',
+          title: '第一食堂',
+          sales: '月销99单',
+          distribution: '10元起送|免配送费',
+          less: '满20-2，满40-8，满60-12',
+          fold: '8.8折',
+          shopping: [{
+            shoopingImg: '/static/img/qjcr.jpg',
+            shoopimgAlt: '',
+            shoopingTitle: '青椒炒肉饭',
+            shoopingMa: '5',
+            shoopingMb: '10'
+          },
+          {
+            shoopingImg: '/static/img/ytf.jpg',
+            shoopimgAlt: '',
+            shoopingTitle: '鸭腿饭',
+            shoopingMa: '8',
+            shoopingMb: '12'
+          },
+          {
+            shoopingImg: '/static/img/dhs.jpg',
+            shoopimgAlt: '',
+            shoopingTitle: '蛋黄酥',
+            shoopingMa: '10',
+            shoopingMb: '15'
+          }]
+        },
+        {
+          logo: '/static/img/youtube.jpg',
+          logoalt: '',
+          title: '小柚私厨',
+          sales: '月销9999单',
+          distribution: '10元起送|免配送费',
+          less: '满20-2，满40-8，满60-12',
+          fold: '8.8折',
+          shopping: [{
+            shoopingImg: '/static/img/szsx2.jpg',
+            shoopimgAlt: '',
+            shoopingTitle: '水煮三鲜',
+            shoopingMa: '50',
+            shoopingMb: '100'
+          },
+          {
+            shoopingImg: '/static/img/ymdx2.jpg',
+            shoopimgAlt: '',
+            shoopingTitle: '油闷大虾',
+            shoopingMa: '20',
+            shoopingMb: '50'
+          },
+          {
+            shoopingImg: '/static/img/dhs.jpg',
+            shoopimgAlt: '',
+            shoopingTitle: '蛋黄酥',
+            shoopingMa: '10',
+            shoopingMb: '15'
+          }]
+        }]
     }
   }
+
+  // created () {
+  //   this.getMerchant()
+  // },
+  // methods: {
+  //   getMerchant () {
+  //     let _this = this
+  //     fly.get('https://easy-mock.com/mock/5b69315d99b4c7086b576bf0/merchant')
+  //       .then(function (response) {
+  //         if (response.status === 200) {
+  //           let merchant = response.data
+  //           console.log(merchant.data)
+  //           _this.loadingShow = false
+  //           _this.merchant = merchant.data
+  //         }
+  //       })
+  //       .catch(function (err) {
+  //         _this.loadingShow = true
+  //         console.log(err)
+  //       })
+  //   },
+  //   testCommodity () {
+  //     wx.navigateTo({
+  //       url: '/pages/address/main'
+  //     })
+  //   }
+  // }
 }
 </script>
 
@@ -223,7 +281,7 @@ export default {
 
   .shop{
     width: 100%;
-    height: 650rpx;
+    // height: 650rpx;
     margin: auto;
     border-top: 1rpx solid #eee;
     -webkit-box-sizing: border-box;

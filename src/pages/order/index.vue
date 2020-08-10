@@ -2,7 +2,7 @@
   <div class="ordercontainer">
     <div class="orderNoList" v-if="!commdityOrder.length">
         <div class="orderImg">
-          <img src="/static/img/order.png" alt="ndd">
+          <img src="/static/img/noOrder.png" alt="ndd">
         </div>
         <p class="orderTitle">当前没有订单！</p>
     </div>
@@ -110,8 +110,8 @@
   background: #f4f4f4;
 }
   .orderImg {
-    width: 130rpx;
-    height: 120rpx;
+    width: 128rpx;
+    height: 128rpx;
     margin: 460rpx auto 0;
     img{
       width: 100%;

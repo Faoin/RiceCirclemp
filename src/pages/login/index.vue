@@ -6,11 +6,11 @@
       </view>
   
       <view class='content'>
-          <view>申请获取以下权限</view>
+          <view>饭圈申请获取以下权限</view>
           <text>获得你的公开信息(昵称，头像等)</text>
       </view>
   
-      <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" @getuserinfo="bindGetUserInfo">
+      <button class='bottom' type='primary' open-type="getUserInfo" lang="zh_CN" bindGetUserInfo="auth">
           授权登录
       </button>
     </view>
@@ -26,80 +26,84 @@ export default {
       /* 判断小程序的API，回调，参数，组件等是否在当前版本可用。 */
       canIUse: wx.canIUse('button.open-type.getUserInfo')
     }
+  }, auth: function(e) {
+    var userInfo = JSON.stringify(e)
+    console.log(userInfo)
   },
-  onLoad () {
-    // var that = this
-    /*  查看是否授权 */
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(getApp().globalData.openid)
-              /* 从数据库获取用户信息 */
-              // that.queryUsreInfo()
-              wx.request({
-                url: getApp().globalData.urlPath + 'hstc_interface/queryByOpenid',
-                data: {
-                  openid: getApp().globalData.openid
-                },
-                header: {
-                  'content-type': 'application/json'
-                },
-                success: function (res) {
-                  console.log(res.data)
-                  getApp().globalData.userInfo = res.data
-                }
-              })
-              /* 用户已经授权过 */
-              wx.switchTab({
-                url: '../index/main'
-              })
-            }
-          })
-        }
-      }
-    })
-  },
-  queryUsreInfo: function () {
-    /*  获取用户信息接口 */
-    wx.request({
-      url: getApp().globalData.urlPath + 'hstc_interface/queryByOpenid',
-      data: {
-        openid: getApp().globalData.openid
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data)
-        getApp().globalData.userInfo = res.data
-      }
-    })
-  },
+  // onLoad () {
+  //   // var that = this
+  //   /*  查看是否授权 */
+  //   wx.getSetting({
+  //     success: function (res) {
+  //       if (res.authSetting['scope.userInfo']) {
+  //         wx.getUserInfo({
+  //           success: function (res) {
+  //             console.log('1111')
+  //             console.log(getApp().globalData.openid)
+  //             /* 从数据库获取用户信息 */
+  //             // that.queryUsreInfo()
+  //             // wx.request({
+  //             //   url: getApp().globalData.urlPath + 'hstc_interface/queryByOpenid',
+  //             //   data: {
+  //             //     openid: getApp().globalData.openid
+  //             //   },
+  //             //   header: {
+  //             //     'content-type': 'application/json'
+  //             //   },
+  //             //   success: function (res) {
+  //             //     console.log(res.data)
+  //             //     getApp().globalData.userInfo = res.data
+  //             //   }
+  //             // })
+  //             /* 用户已经授权过 */
+  //             wx.switchTab({
+  //               url: '../index/main'
+  //             })
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  // },
+  // queryUsreInfo: function () {
+  //   /*  获取用户信息接口 */
+  //   wx.request({
+  //     url: getApp().globalData.urlPath + 'hstc_interface/queryByOpenid',
+  //     data: {
+  //       openid: getApp().globalData.openid
+  //     },
+  //     header: {
+  //       'content-type': 'application/json'
+  //     },
+  //     success: function (res) {
+  //       console.log(res.data)
+  //       getApp().globalData.userInfo = res.data
+  //     }
+  //   })
+  // },
   bindGetUserInfo (e) {
     if (e.detail.userInfo) {
       /* 用户按了允许授权按钮 */
-      var that = this
+      // var that = this
       /* 插入登录的用户的相关信息到数据库 */
-      wx.request({
-        url: getApp().globalData.urlPath + 'hstc_interface/insert_user',
-        data: {
-          openid: getApp().globalData.openid,
-          nickName: e.detail.userInfo.nickName,
-          avatarUrl: e.detail.userInfo.avatarUrl,
-          province: e.detail.userInfo.province,
-          city: e.detail.userInfo.city
-        },
-        header: {
-          'content-type': 'application/json'
-        },
-        success: function (res) {
-          /* 从数据库获取用户信息 */
-          that.queryUsreInfo()
-          console.log('插入小程序登录用户信息成功！')
-        }
-      })
+      // wx.request({
+      //   url: getApp().globalData.urlPath + 'hstc_interface/insert_user',
+      //   data: {
+      //     openid: getApp().globalData.openid,
+      //     nickName: e.detail.userInfo.nickName,
+      //     avatarUrl: e.detail.userInfo.avatarUrl,
+      //     province: e.detail.userInfo.province,
+      //     city: e.detail.userInfo.city
+      //   },
+      //   header: {
+      //     'content-type': 'application/json'
+      //   },
+      //   success: function (res) {
+      //     /* 从数据库获取用户信息 */
+      //     that.queryUsreInfo()
+      //     console.log('插入小程序登录用户信息成功！')
+      //   }
+      // })
       /* 授权成功后，跳转进入小程序首页 */
       wx.navigateTo({
         url: '../index/index'

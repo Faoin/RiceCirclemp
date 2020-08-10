@@ -22,19 +22,19 @@ export default {
         console.log(res.code)
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         if (res.code) {
-          wx.request({
-            url: 'http://localhost:8081/wxcn/getOpenId',
-            data: {
-              'code': res.code
-            },
-            method: 'POST',
-            header: {
-              'content-type': 'application/json;charset=utf-8'
-            },
-            success: function (data) {
-              console.log(data)
-            }
-          })
+          // wx.request({
+          //   url: 'http://localhost:8081/wxcn/getOpenId',
+          //   data: {
+          //     'code': res.code
+          //   },
+          //   method: 'POST',
+          //   header: {
+          //     'content-type': 'application/json;charset=utf-8'
+          //   },
+          //   success: function (data) {
+          //     console.log(data)
+          //   }
+          // })
         } else {
           console.log('Failed to obtain user logon state!' + res.errMsg)
         }
