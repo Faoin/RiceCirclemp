@@ -101,7 +101,7 @@ export default {
       loadingShow: true,
       merchant: [
         {
-          logo: '/static/img/logoFor.jpg',
+          logo: '/static/img/logo001.jpg',
           logoalt: '',
           title: '第一食堂',
           sales: '月销99单',
