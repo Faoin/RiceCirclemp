@@ -1,0 +1,27 @@
+<template name="index$4084ffbe">
+  <view class="_div data-v-01b2764c addressContainer">
+    <view class="_div data-v-01b2764c addressNoList" wx:if="{{!userAddres.length}}">
+      <view class="_div data-v-01b2764c addressImg">
+        <image src="/static/img/address1.png" alt="address" class="_img data-v-01b2764c"></image>
+      </view>
+      <view class="_p data-v-01b2764c addressDetail"> 您还没有地址，可以点击底部按钮新建地址 </view>
+    </view>
+    <view class="_div data-v-01b2764c addressList" wx:else>
+      <i-cell-group class="_i-cell-group data-v-01b2764c">
+        <i-cell wx:key="index" key="{{index}}" title="{{(item.addressName) + '  ' + (item.addressPhone)}}" label="{{item.addressDetail}}" wx:for="{{userAddres}}" wx:for-index="index" wx:for-item="item" class="_i-cell data-v-01b2764c">
+          <i-radio slot="icon" bindchange="handleProxy" checked="{{userOrderAddres === index ? true : false }}" data-eventid="{{'0-'+index}}" data-comkey="{{$k}}" class="_i-radio data-v-01b2764c"></i-radio>
+          <i-icon bindtap="handleProxy" slot="footer" size="18" type="brush" data-eventid="{{'1-'+index}}" data-comkey="{{$k}}" class="_i-icon data-v-01b2764c"></i-icon>
+        </i-cell>
+      </i-cell-group>
+      <view class="_div data-v-01b2764c addressListEmpty"></view>
+    </view>
+    <view class="_div data-v-01b2764c addressAdd" bindtap="handleProxy" data-eventid="{{'2'}}" data-comkey="{{$k}}">
+      <view class="_div data-v-01b2764c addressAddContent">
+        <view class="_div data-v-01b2764c addressAddContentIcon">
+          <image src="/static/img/addresadd.png" alt="addresadd" class="_img data-v-01b2764c"></image>
+        </view>
+        <view class="_div data-v-01b2764c addressAddContentTitle">新增地址</view>
+      </view>
+    </view>
+  </view>
+</template>
