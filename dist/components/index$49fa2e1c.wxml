@@ -1,0 +1,47 @@
+<template name="index$49fa2e1c">
+  <view class="_div data-v-29881e2c container">
+    <view class="_div data-v-29881e2c headSearch">
+      <view class="_div data-v-29881e2c headSearchInput" bindtap="handleProxy" data-eventid="{{'0'}}" data-comkey="{{$k}}">
+        <input class="_input data-v-29881e2c headSeachISearch" type="search" placeholder="请输入商品名称" />
+      </view>
+    </view>
+    <view class="_div data-v-29881e2c banner" bindtap="handleProxy" data-eventid="{{'1'}}" data-comkey="{{$k}}">
+      <image src="/static/img/banner1.png" alt="banner" class="_img data-v-29881e2c"></image>
+    </view>
+    <view class="_div data-v-29881e2c main">
+      <view class="_div data-v-29881e2c shop" wx:key="index" key="{{index}}" wx:for="{{merchant}}" wx:for-index="index" wx:for-item="item">
+        <view class="_div data-v-29881e2c shopContent">
+          <view class="_div data-v-29881e2c shopContentTitle clearflx">
+            <navigator url="/pages/commodity/main" class="_a data-v-29881e2c">
+              <view class="_div data-v-29881e2c sCTImg">
+                <image src="{{item.logo}}" alt="{{item.logoalt}}" class="_img data-v-29881e2c"></image>
+              </view>
+            </navigator>
+            <view class="_div data-v-29881e2c sCTDetail">
+              <view class="_div data-v-29881e2c sCTDetailTitle">
+                <view class="_div data-v-29881e2c sCTDetailTitleicon">店铺</view>
+                <view class="_p data-v-29881e2c">{{item.title}}</view>
+              </view>
+              <view class="_div data-v-29881e2c sCTDetailpj"> {{item.sales}} </view>
+              <view class="_div data-v-29881e2c sCTDetailm"> {{item.distribution}} </view>
+            </view>
+          </view>
+          <view class="_div data-v-29881e2c shopLine"></view>
+          <view class="_div data-v-29881e2c shopActivity clearflx">
+            <view class="_div data-v-29881e2c shopActivityicon clearflx">
+              <view class="_div data-v-29881e2c shopActivityiconJ">减</view>
+              <view class="_p data-v-29881e2c">{{item.less}}</view>
+            </view>
+            <view class="_div data-v-29881e2c shopActivityicon clearflx">
+              <view class="_div data-v-29881e2c shopActivityiconJ">折</view>
+              <view class="_p data-v-29881e2c">{{item.fold}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="_div data-v-29881e2c">
+        <i-load-more tip="暂无数据" loading="{{loadingShow}}" class="_i-load-more data-v-29881e2c"></i-load-more>
+      </view>
+    </view>
+  </view>
+</template>

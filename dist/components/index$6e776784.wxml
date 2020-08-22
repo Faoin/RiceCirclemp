@@ -1,0 +1,26 @@
+<template name="index$6e776784">
+  <view class="_div data-v-0fb92a52 shoppcontainer">
+    <view class="_div data-v-0fb92a52 shoppHeader">
+      <view class="_div data-v-0fb92a52 shoppTitle">
+        <view class="_p data-v-0fb92a52 shoppTitleL">美食推荐</view>
+      </view>
+    </view>
+    <view class="_div data-v-0fb92a52 shoppList" wx:key="index" key="{{index}}" wx:for="{{newShopp}}" wx:for-index="index" wx:for-item="item">
+      <view class="_div data-v-0fb92a52 shoppListTitle">
+        <view class="_div data-v-0fb92a52 shoppListTitleIcon">店铺</view> {{item.name}} </view>
+      <view class="_div data-v-0fb92a52 shoppListDetail" wx:key="indexList" key="{{indexList}}" wx:for="{{item.shoppingList}}" wx:for-index="indexList" wx:for-item="itemList">
+        <view class="_div data-v-0fb92a52 shoppListDetailImg">
+          <image src="{{itemList.shoppingImg}}" alt="{{itemList.shoppingImgAlt}}" class="_img data-v-0fb92a52"></image>
+        </view>
+        <view class="_div data-v-0fb92a52 shoppListDetailD">
+          <view class="_p data-v-0fb92a52 shoppListDetailDT">{{itemList.shoppListDetailDT}}</view>
+          <view class="_p data-v-0fb92a52 shoppListDetailDP">{{itemList.shoppListDetailDP}}</view>
+          <view class="_p data-v-0fb92a52 shoppListDetailDM">{{itemList.shoppListDetailDM}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="_div data-v-0fb92a52 {{[loadingShow ? 'shoppLoading' : '']}}">
+      <i-load-more tip="暂无数据" loading="{{loadingShow}}" class="_i-load-more data-v-0fb92a52"></i-load-more>
+    </view>
+  </view>
+</template>
