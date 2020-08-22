@@ -1,9 +1,9 @@
 <template>
 <div class="commodityContainer">
   <div class="commodity">
-    <img src="/static/img/cb.png" alt="cb">
+    <img src="/static/img/banner02.jpg" alt="cb">
     <div class="commodityLogo">
-      <img src="/static/img/xbk.png" alt="xbk">
+      <img src="/static/img/youtube.jpg" alt="xbk">
     </div>
   </div>
 
@@ -30,6 +30,7 @@
           <div class="commodityListShoppContentDD">
             <p class="commodityListShoppContentDDT">{{commodityItems.commodityName}}</p>
             <p class="commodityListShoppContentDDD">{{commodityItems.commodityDetail}}</p>
+             <p class="commodityListShoppContentDDD">{{commodityItems.commodityDetail2}}</p>
             <p class="commodityListShoppContentDDM">{{commodityItems.commodityMoney}}元</p>
             <div class="commodityAdd">
               <img src="/static/img/add.png" alt="add">
@@ -98,24 +99,35 @@ export default {
     return {
       commodityIndexs: 0,
       commodityToggleShow: false,
-      commodityName: '九三鸭霸王外卖店',
+      commodityName: '小柚私厨',
       commodityList: [
         {
-          commodityMenu: '炒菜',
+          commodityMenu: '套餐饭',
           commodityData: [
             {
-              commodityImg: '/static/img/xbk.png',
+              commodityImg: '/static/img/hbdmm2.jpg',
               commodityAlt: 'xbk',
-              commodityName: '香辣鸡腿堡1',
-              commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityName: '荷包蛋焖面',
+              commodityDetail: '主要原料：鸡蛋、挂面、调味料',
+              commodityDetail2: '月销9999份 好评率100%',
               commodityMoney: 5,
               commoditySum: 1
             },
             {
-              commodityImg: '/static/img/xbk.png',
+              commodityImg: '/static/img/qjcr.jpg',
               commodityAlt: 'xbk',
-              commodityName: '香辣鸡腿堡2',
-              commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityName: '青椒炒肉饭',
+              commodityDetail: '主要原料：猪肉、青椒、米饭',
+              commodityDetail2: '月销99份 好评率100%',
+              commodityMoney: 5,
+              commoditySum: 1
+            },
+            {
+              commodityImg: '/static/img/ytf.jpg',
+              commodityAlt: 'xbk',
+              commodityName: '鸭腿饭',
+              commodityDetail: '主要原料：鸭腿、青菜、米饭',
+              commodityDetail2: '月销69份 好评率99%',
               commodityMoney: 8,
               commoditySum: 1
             }
@@ -129,6 +141,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡3',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 14,
               commoditySum: 1
             },
@@ -137,6 +150,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡4',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 12,
               commoditySum: 1
             },
@@ -145,19 +159,21 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡5',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             }
           ]
         },
         {
-          commodityMenu: '炒菜',
+          commodityMenu: '面食',
           commodityData: [
             {
               commodityImg: '/static/img/xbk.png',
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡6',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             },
@@ -166,6 +182,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡7',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 11,
               commoditySum: 1
             },
@@ -174,6 +191,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡8',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             },
@@ -182,19 +200,21 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡9',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             }
           ]
         },
         {
-          commodityMenu: '炒菜',
+          commodityMenu: '炸鸡汉堡',
           commodityData: [
             {
               commodityImg: '/static/img/xbk.png',
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡10',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             },
@@ -203,6 +223,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡11',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             },
@@ -211,6 +232,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡12',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             },
@@ -219,6 +241,7 @@ export default {
               commodityAlt: 'xbk',
               commodityName: '香辣鸡腿堡13',
               commodityDetail: '鸡肉、青椒、等等等等等等等等等等等等等等等等',
+              commodityDetail2: '月销99份 好评率100%',
               commodityMoney: 10,
               commoditySum: 1
             }

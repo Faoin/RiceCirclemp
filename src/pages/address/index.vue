@@ -2,7 +2,7 @@
   <div class="addressContainer">
     <div class="addressNoList" v-if="!userAddres.length">
       <div class="addressImg">
-        <img src="/static/img/address.png" alt="address">
+        <img src="/static/img/address1.png" alt="address">
       </div>
       <p class="addressDetail">
         您还没有地址，可以点击底部按钮新建地址
@@ -90,7 +90,7 @@ export default {
     margin-top: 440rpx;
     .addressImg {
       width: 128rpx;
-      height: 108rpx;
+      height: 128rpx;
       margin: auto;
       overflow: hidden;
       img{
