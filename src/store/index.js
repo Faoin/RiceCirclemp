@@ -34,7 +34,7 @@ export default new Vuex.Store({
      * 用户地址 后期使用数据库存储
      */
     userAddres: [],
-    userOrderAddres: 0,
+    userOrderAddres: 1,
     // 意见反馈
     feedbackList: []
   },
@@ -103,11 +103,25 @@ export default new Vuex.Store({
       state.userAddres.push(userAddresClone)
     },
     /**
+     * 设置用户收货地址列表
+     * @param state
+     * @param userOrderAddres
+     */
+    setUserAddresList (state, userAddres) {
+      let userAddresClone = _.clone(userAddres)
+      console.log(1651)
+      console.log(userAddresClone)
+      state.userAddres.push(userAddresClone)
+    },
+
+    /**
      * 设置订单收货地址
      * @param state
      * @param userOrderAddres
      */
     setUserOrderAddres (state, userOrderAddres) {
+      console.log(1618)
+      console.log(userOrderAddres)
       state.userOrderAddres = userOrderAddres
     },
     /**
@@ -116,9 +130,9 @@ export default new Vuex.Store({
      * @param userAddress
      */
     updateUserAddress (state, userAddress) {
-      state.userAddres[userAddress.index].addressName = userAddress.addressName
-      state.userAddres[userAddress.index].addressPhone = userAddress.addressPhone
-      state.userAddres[userAddress.index].addressDetail = userAddress.addressDetail
+      state.userAddres[userAddress.index].userName = userAddress.userName
+      state.userAddres[userAddress.index].mobile = userAddress.mobile
+      state.userAddres[userAddress.index].address = userAddress.address
     },
     /**
      * 删除用户收货地址
@@ -170,6 +184,9 @@ export default new Vuex.Store({
     },
     setUserAddres ({commit}, userAddres) {
       commit('setUserAddres', userAddres)
+    },
+    setUserAddresList ({commit}, userAddres) {
+      commit('setUserAddresList', userAddres)
     },
     setUserOrderAddres ({commit}, userOrderAddres) {
       commit('setUserOrderAddres', userOrderAddres)

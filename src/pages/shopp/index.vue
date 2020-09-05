@@ -30,35 +30,35 @@
 </template>
 
 <script>
-  let Fly = require('flyio/dist/npm/wx')
-  let fly = new Fly()
+  // let Fly = require('flyio/dist/npm/wx')
+  // let fly = new Fly()
   export default {
     data () {
       return {
         loadingShow: true,
         newShopp: []
       }
-    },
-    created () {
-      this.getShopping()
-    },
-    methods: {
-      getShopping () {
-        let _this = this
-        fly.get('https://easy-mock.com/mock/5b69315d99b4c7086b576bf0/shopping')
-          .then(function (response) {
-            if (response.status === 200) {
-              let shopping = response.data
-              _this.loadingShow = false
-              _this.newShopp = shopping.data
-            }
-          })
-          .catch(function (err) {
-            _this.loadingShow = true
-            console.log(err)
-          })
-      }
     }
+    // created () {
+    //   this.getShopping()
+    // },
+    // methods: {
+    //   getShopping () {
+    //     let _this = this
+    //     fly.get('https://easy-mock.com/mock/5b69315d99b4c7086b576bf0/shopping')
+    //       .then(function (response) {
+    //         if (response.status === 200) {
+    //           let shopping = response.data
+    //           _this.loadingShow = false
+    //           _this.newShopp = shopping.data
+    //         }
+    //       })
+    //       .catch(function (err) {
+    //         _this.loadingShow = true
+    //         console.log(err)
+    //       })
+    //   }
+    // }
   }
 </script>
 

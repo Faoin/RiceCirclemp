@@ -5,7 +5,7 @@
        v-for="(item, index) in contactUs"
        :key="index"
        :title="item.name"
-       :value="item.contact">
+       :value="item.mobile">
        <i-icon
          slot="icon"
          type="group_fill"
@@ -17,59 +17,34 @@
 </template>
 
 <script>
+let Fly = require('flyio/dist/npm/wx')
+let fly = new Fly()
 export default {
   data () {
     return {
-      contactUs: [
-        {
-          name: '客服小红',
-          contact: 'Tel:15273656769'
-        },
-        {
-          name: '客服小怡',
-          contact: 'Tel:15273656769'
-        },
-        {
-          name: '客服小情',
-          contact: 'Tel:15273656769'
-        },
-        {
-          name: '客服小慧',
-          contact: 'Tel:15273656769'
-        },
-        {
-          name: '客服小燕',
-          contact: 'Tel:15273656769'
-        },
-        {
-          name: '客服小瑶',
-          contact: 'Qq:15273656769'
-        },
-        {
-          name: '客服小红',
-          contact: 'Qq:15273656769'
-        },
-        {
-          name: '客服小怡',
-          contact: 'Qq:15273656769'
-        },
-        {
-          name: '客服小情',
-          contact: 'Qq:15273656769'
-        },
-        {
-          name: '客服小慧',
-          contact: 'Qq:15273656769'
-        },
-        {
-          name: '客服小燕',
-          contact: 'Qq:15273656769'
-        },
-        {
-          name: '客服小瑶',
-          contact: 'Qq:15273656769'
-        }
-      ]
+      contactUs: []
+    }
+  },
+  onShow: function (option) {
+    console.log('onload...')
+    this.getContactUsList()
+  },
+  methods: {
+    getContactUsList () {
+      console.log('获取客服列表')
+      let _this = this
+      fly.get('http://localhost:8088/system/contact/getContactList')
+        .then(function (response) {
+          if (response.status === 200) {
+            console.log(response)
+            let contactUsArr = response.data.rows
+            _this.contactUs = contactUsArr
+          }
+        })
+        .catch(function (err) {
+          _this.loadingShow = true
+          console.log(err)
+        })
     }
   }
 

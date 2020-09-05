@@ -1,5 +1,10 @@
 <script>
 export default {
+  data () {
+    return {
+      openId: []
+    }
+  },
   created () {
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync('logs') || []
@@ -13,8 +18,13 @@ export default {
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    let _this = this
     wx.login({
       success: res => {
+        // this.globalData.userInfo = res.code
+        // console.log('挂载数据:' + this.globalData.userInfo)
+        // this.$store = res.code
+        // console.log('CODE:' + this.$store)
         // console.log(res)
         // console.log(res.code)
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
@@ -32,8 +42,10 @@ export default {
               'content-type': 'application/json;charset=utf-8'
             },
             success: function (data) {
-              console.log(data.data.msg)
-              if (data.data.msg !== 'UserExist') {
+              let _openId = data.data.msg
+              _this.openId = _openId
+              // this.globalData.openid = _this.openId
+              if (_openId === null) {
                 wx.navigateTo({
                   url: '/pages/login/main'
                 })

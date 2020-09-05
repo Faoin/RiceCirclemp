@@ -27,21 +27,21 @@
         <i-cell title="收货地址" is-link="true" url="/pages/address/main">
           <i-icon slot="icon" type="coordinates_fill" color="#0097ff" size="18" />
         </i-cell>
-        <i-cell title="联系我们" is-link="true" url="/pages/contactus/main">
+        <i-cell title="联系客服" is-link="true" url="/pages/contactus/main">
           <i-icon slot="icon" type="group_fill" color="#0097ff" size="18" />
         </i-cell>
         <i-cell title="联系商家" is-link="true" url="/pages/contactmerchant/main">
           <i-icon slot="icon" type="homepage_fill" color="#0097ff" size="18" />
         </i-cell>
-        <i-cell title="意见反馈" is-link="true" url="/pages/feedback/main">
+        <!-- <i-cell title="意见反馈" is-link="true" url="/pages/feedback/main">
           <i-icon slot="icon" type="like_fill" color="#0097ff" size="18" />
-        </i-cell>
+        </i-cell> -->
       </i-cell-group>
     </div>
 
-    <div class="userLogIn">
+    <!-- <div class="userLogIn">
       <a>退出登陆</a>
-    </div>
+    </div> -->
   </div>
 </template>
 

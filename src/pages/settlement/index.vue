@@ -7,7 +7,7 @@
       </p>
       <p class="settlementHeaderAddressA" @click="setUserOrderAddresTitle">
 
-        {{ userAddres.length===0 ? '请选择收货地址>' :  [setUserOrderAddres.name,setUserOrderAddres.phone,setUserOrderAddres.address] }}
+        {{ setUserOrderAddres.userName===null ? '请选择收货地址>' :  [setUserOrderAddres.userName,setUserOrderAddres.mobile,setUserOrderAddres.address] }}
 
 
 
@@ -23,9 +23,9 @@
         v-for="(item, index) in commdityShopping"
         :key="index"
         :title="item.commodityName"
-        :value="(item.commodityMoney) * (item.commoditySum)"></i-cell>
-      <i-cell title="配送费" :value="  commditySumPrice < 10 ? 1 : 0  " ></i-cell>
-      <i-cell title="优惠金额 " :value="randomSum" ></i-cell>
+        :value=" '￥' + (item.commodityMoney) + ' 共' + (item.commoditySum) + '件' "></i-cell>
+      <i-cell title="配送费" :value="  commdityRealSumPrice < 10 ? 1 : 0  " ></i-cell>
+      <!-- <i-cell title="优惠金额 " :value="randomSum" ></i-cell> -->
 
     </i-cell-group>
   </div>
@@ -33,9 +33,9 @@
   <div class="settlementFooter">
     <div class="settlementFooterL">
       <p class="settlementFooterLM">
-        <span class="settlementFooterLMSum">{{commditySumPriceYH}}元</span>
-        <span class="settlementFooterLMH">|</span>
-        <span class="settlementFooterLMYH">已优惠{{randomSum}}元</span>
+        <span class="settlementFooterLMSum">实际支付金额：{{commditySumPriceYH}}元</span>
+        <!-- <span class="settlementFooterLMH">|</span>
+        <span class="settlementFooterLMYH">已优惠{{randomSum}}元</span> -->
       </p>
     </div>
     <div class="settlementFooterR" @click="payClickTest">
@@ -70,13 +70,24 @@ export default {
         'userAddres',
         'userOrderAddres'
       ]),
+      // 未加配送费价格
+      commdityRealSumPrice () {
+        let commdityRealSumPrice = 0
+        _.forEach(this.commdityShopping, function (value, key) {
+          commdityRealSumPrice += (value.commodityMoney * value.commoditySum)
+        })
+        console.log(111)
+        console.log(commdityRealSumPrice)
+        return commdityRealSumPrice
+      },
       // 实际价格
       commditySumPrice () {
         let commditySumPrice = 0
         _.forEach(this.commdityShopping, function (value, key) {
           commditySumPrice += (value.commodityMoney * value.commoditySum)
         })
-
+        console.log(111)
+        console.log(commditySumPrice)
         if (commditySumPrice < 10) {
           commditySumPrice += 1
         }
@@ -85,18 +96,18 @@ export default {
 
       // 优惠价格
       commditySumPriceYH () {
-        this.randomSum = _.random(1, 10)
+        // this.randomSum = _.random(1, 10)
         let commditySumPriceYH = this.commditySumPrice
-        if (this.randomSum >= commditySumPriceYH) {
-          this.randomSum = 0
-        } else {
-          commditySumPriceYH -= this.randomSum
-        }
+        // if (this.randomSum >= commditySumPriceYH) {
+        //   this.randomSum = 0
+        // } else {
+        //   commditySumPriceYH -= this.randomSum
+        // }
 
         return commditySumPriceYH
       }
     },
-    onLoad () {
+    onShow: function (option) {
       this.setUserOrderAddresDetail()
     },
     watch: {
@@ -120,21 +131,19 @@ export default {
           commdityOrderName: '',
           commdityOrderShopping: [],
           commdityOrderOffer: 0,
-          commdityOrderActual: this.commditySumPrice,
+          commdityOrderActual: this.commdityRealSumPrice,
           commdityOrderSumPrice: 0,
           commdityOrderUserAddress: {}
         },
-        setUserOrderAddres: {
-          naem: '',
-          phone: '',
-          address: ''
-        }
+        setUserOrderAddres: [],
+        commdityOrdersDetails: []
       }
     },
     methods: {
       payClickTest () {
         let _this = this
-        if (this.userAddres.length === 0) {
+        console.log(_this.setUserOrderAddres.userName)
+        if (_this.setUserOrderAddres.userName === null) {
           this.tipsMessage.status = true
           setTimeout(function () {
             _this.tipsMessage.status = false
@@ -144,10 +153,44 @@ export default {
         this.commdityOrders.commdityOrderName = this.commdityShoppingName
         this.commdityOrders.commdityOrderShopping = this.commdityShopping
         this.commdityOrders.commdityOrderOffer = this.randomSum
-        this.commdityOrders.commdityOrderActual = this.commditySumPrice
+        this.commdityOrders.commdityOrderActual = this.commdityRealSumPrice
         this.commdityOrders.commdityOrderSumPrice = this.commditySumPriceYH
         this.commdityOrders.commdityOrderUserAddress = this.setUserOrderAddres
         this.$store.dispatch('setCommdityOrder', this.commdityOrders)
+        console.log('name:' + this.commdityOrders.commdityOrderName + 'Offer:' + this.commdityOrders.commdityOrderOffer)
+        console.log(this.commdityOrders)
+        // console.log(JSON.parse(JSON.stringify(this.commdityOrders)))
+        let commdityList = this.commdityOrders.commdityOrderShopping
+        _this.commdityOrdersDetails = JSON.parse(JSON.stringify(commdityList))
+        _this.commdityOrders = this.commdityOrders
+        console.log(_this.commdityOrdersDetails)
+        console.log(_this.commdityOrdersDetails[0].foodId)
+        console.log(_this.commdityOrders.commdityOrderUserAddress.id)
+        // console.log(commdityOrdersDetails.foodId)
+        wx.login({
+          complete: (res) => {
+            wx.request({
+              url: 'http://localhost:8088/system/order/addOrderByUserId',
+              data: JSON.stringify({
+                code: '' + res.code,
+                foodId: '' + _this.commdityOrdersDetails[0].foodId,
+                shopInfoId: '' + _this.commdityOrdersDetails[0].shopInfoId,
+                commodityMoney: '' + _this.commdityOrdersDetails[0].commodityMoney,
+                commdityOrderSumPrice: '' + _this.commdityOrders.commdityOrderSumPrice,
+                commodityActualMoney: '' + _this.commdityOrders.commdityOrderActual,
+                commoditySum: '' + _this.commdityOrdersDetails[0].commoditySum,
+                commdityOrderUserAddressId: '' + _this.commdityOrders.commdityOrderUserAddress.id
+              }),
+              method: 'POST',
+              header: {
+                'content-type': 'application/json;charset=utf-8'
+              },
+              success: function (data) {
+                console.log(data)
+              }
+            })
+          }
+        })
         // this.commdityOrders.commdityOrderName = ''
         // this.commdityOrders.commdityOrderShopping = []
         this.payShow = true
@@ -161,13 +204,26 @@ export default {
         wx.navigateTo({url})
       },
       setUserOrderAddresDetail () {
-        if (this.userAddres.length) {
-          this.setUserOrderAddres.name = this.userAddres[this.userOrderAddres].addressName
-          this.setUserOrderAddres.phone = this.userAddres[this.userOrderAddres].addressPhone
-          this.setUserOrderAddres.address = this.userAddres[this.userOrderAddres].addressDetail
-        } else {
-          return false
-        }
+        console.log(1714)
+        console.log(this.userOrderAddres)
+        let _this = this
+        wx.request({
+          url: 'http://localhost:8088/system/receiver/getUserReceiverAddrById',
+          data: JSON.stringify({
+            index: this.userOrderAddres
+          }),
+          method: 'POST',
+          header: {
+            'content-type': 'application/json;charset=utf-8'
+          },
+          success: function (data) {
+            console.log('data')
+            console.log(data)
+            let ReceiverAddr = data.data.data
+            _this.setUserOrderAddres = ReceiverAddr
+            console.log(_this.setUserOrderAddres)
+          }
+        })
       }
     }
 }
