@@ -12,7 +12,7 @@
       v-for="(item, index) in commdityOrder"
       :key="index">
         <i-cell-group>
-          <i-cell :title="item.commdityOrderName">
+          <i-cell :title="item.shopShopname">
             <i-icon
               @click="DeltoggleFull(index)"
               slot="footer"
@@ -22,22 +22,22 @@
             <!--<i-icon slot="footer" type="delete" color="#d9644c" />-->
           </i-cell>
 
-            <i-cell
+            <!-- <i-cell
               v-for="(itemChild, indexChild) in item.commdityOrderShopping"
               :key="indexChild"
               :title="itemChild.commodityName"
               :value=" ' ￥' + (itemChild.commodityMoney) + ' 共' + (itemChild.commoditySum) + '件' ">
 
-            </i-cell>
+            </i-cell> -->
 
-          <i-cell title="配送费" :value="item.commdityOrderActual < 10 ? 1 : 0"></i-cell>
+          <!-- <i-cell title="配送费" :value="item.commdityOrderActual < 10 ? 1 : 0"></i-cell> -->
           <!-- <i-cell title="优惠金额" :value="item.commdityOrderOffer"></i-cell> -->
           <!-- <i-cell title="需要支付" :value="item.commdityOrderActual"></i-cell> -->
-          <i-cell title="实际支付" :value="item.commdityOrderSumPrice"></i-cell>
+          <!-- <i-cell title="实际支付" :value="item.commdityOrderSumPrice"></i-cell> -->
           <i-cell title="配送地址"
-                  :value="item.commdityOrderUserAddress.mobile"
-                  :label="item.commdityOrderUserAddress.userName +','+item.commdityOrderUserAddress.address"></i-cell>
-          <i-cell title="下单时间" :value="item.commdityOrderSumPrice"></i-cell>
+                  :value="item.shopMobile"
+                  :label="item.userName +','+item.userAddress"></i-cell>
+          <i-cell title="下单时间" :value="item.createTime"></i-cell>
         </i-cell-group>
       </div>
 
@@ -71,8 +71,33 @@
     data () {
       return {
         orderTipsMessage: false,
-        commdityShoppingIndex: 0
+        commdityShoppingIndex: 0,
+        commdityOrder: []
       }
+    },
+    onShow: function (option) {
+      // 根据用户的openID获取订单信息
+      let _this = this
+      wx.login({
+        complete: (res) => {
+          wx.request({
+            url: 'http://localhost:8088/system/order/getOrderByUserId',
+            data: JSON.stringify({
+              code: '' + res.code
+            }),
+            method: 'POST',
+            header: {
+              'content-type': 'application/json;charset=utf-8'
+            },
+            success: function (data) {
+              console.log(data)
+              let commdityOrderArr = data.data.data
+              console.log(commdityOrderArr)
+              _this.commdityOrder = commdityOrderArr
+            }
+          })
+        }
+      })
     },
     computed: {
       ...mapState([
