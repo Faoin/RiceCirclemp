@@ -38,7 +38,7 @@
         <span class="settlementFooterLMYH">已优惠{{randomSum}}元</span> -->
       </p>
     </div>
-    <div class="settlementFooterR" @click="payClickTest">
+    <div class="settlementFooterR" @click="pay">
       去支付
     </div>
   </div>
@@ -172,14 +172,19 @@ export default {
             wx.request({
               url: 'http://localhost:8088/system/order/addOrderByUserId',
               data: JSON.stringify({
-                code: '' + res.code,
-                foodId: '' + _this.commdityOrdersDetails[0].foodId,
-                shopInfoId: '' + _this.commdityOrdersDetails[0].shopInfoId,
-                commodityMoney: '' + _this.commdityOrdersDetails[0].commodityMoney,
-                commdityOrderSumPrice: '' + _this.commdityOrders.commdityOrderSumPrice,
-                commodityActualMoney: '' + _this.commdityOrders.commdityOrderActual,
-                commoditySum: '' + _this.commdityOrdersDetails[0].commoditySum,
-                commdityOrderUserAddressId: '' + _this.commdityOrders.commdityOrderUserAddress.id
+                code: res.code,
+                commdityOrders: _this.commdityOrders,
+                commdityOrderUserAddress: _this.commdityOrders.commdityOrderUserAddress,
+                commdityShopping: _this.commdityOrders.commdityOrderShopping,
+                shopInfoId: '' + _this.commdityOrdersDetails[0].shopInfoId
+                // code: '' + res.code,
+                // foodId: '' + _this.commdityOrdersDetails[0].foodId,
+                // shopInfoId: '' + _this.commdityOrdersDetails[0].shopInfoId,
+                // commodityMoney: '' + _this.commdityOrdersDetails[0].commodityMoney,
+                // commdityOrderSumPrice: '' + _this.commdityOrders.commdityOrderSumPrice,
+                // commodityActualMoney: '' + _this.commdityOrders.commdityOrderActual,
+                // commoditySum: '' + _this.commdityOrdersDetails[0].commoditySum,
+                // commdityOrderUserAddressId: '' + _this.commdityOrders.commdityOrderUserAddress.id
               }),
               method: 'POST',
               header: {
@@ -195,6 +200,54 @@ export default {
         // this.commdityOrders.commdityOrderShopping = []
         this.payShow = true
         // console.log(this.commdityOrder)
+      },
+      pay () {
+        let _this = this
+        wx.login({
+          complete: (res) => {
+            if (res.code) {
+              wx.request({
+                url: 'http://localhost:8088/system/order/payOrderByMpRc',
+                data: JSON.stringify({
+                  code: '' + res.code,
+                  total_fee: '' + _this.commdityRealSumPrice,
+                  body: '' + _this.commdityShoppingName
+                }),
+                method: 'POST',
+                header: {
+                  'content-type': 'application/json;charset=utf-8'
+                }
+              }).then(res => {
+                wx.requestPayment({
+                  nonceStr: 'nonceStr',
+                  package: 'package',
+                  paySign: 'paySign',
+                  signType: 'MD5',
+                  timeStamp: 'timeStamp',
+                  success: (res) => {
+                    wx.showToast({
+                      title: '支付成功！',
+                      icon: 'success',
+                      duration: 2000
+                    })
+                  },
+                  fail: function (res) {
+                    wx.showToast({
+                      title: '支付失败！',
+                      icon: 'warn',
+                      duration: 1500
+                    })
+                  },
+                  complete: function (res) {
+                    console.log(res)
+                  }
+                })
+              })
+            } else {
+              console.log('获取用户登录信息失败！' + res.errMsg)
+            }
+          }
+        })
       },
       closePayFull (status) {
         this.payShow = status
