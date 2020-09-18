@@ -201,53 +201,101 @@ export default {
         this.payShow = true
         // console.log(this.commdityOrder)
       },
+      /* 微信支付 */
       pay () {
         let _this = this
         wx.login({
           complete: (res) => {
             if (res.code) {
-              wx.request({
-                url: 'http://localhost:8088/system/order/payOrderByMpRc',
-                data: JSON.stringify({
-                  code: '' + res.code,
-                  total_fee: '' + _this.commdityRealSumPrice,
-                  body: '' + _this.commdityShoppingName
-                }),
-                method: 'POST',
-                header: {
-                  'content-type': 'application/json;charset=utf-8'
-                }
-              }).then(res => {
-                wx.requestPayment({
-                  nonceStr: 'nonceStr',
-                  package: 'package',
-                  paySign: 'paySign',
-                  signType: 'MD5',
-                  timeStamp: 'timeStamp',
-                  success: (res) => {
-                    wx.showToast({
-                      title: '支付成功！',
-                      icon: 'success',
-                      duration: 2000
-                    })
-                  },
-                  fail: function (res) {
-                    wx.showToast({
-                      title: '支付失败！',
-                      icon: 'warn',
-                      duration: 1500
-                    })
-                  },
-                  complete: function (res) {
-                    console.log(res)
-                  }
-                })
-              })
+              console.log('获取到login code:' + res.code)
+              _this.getOpenId(res.code)
             } else {
               console.log('获取用户登录信息失败！' + res.errMsg)
             }
           }
         })
+      },
+      getOpenId: function (code) {
+        let _this = this
+        wx.request({
+          url: 'http://localhost:8088/system/order/payOrderByMpRc',
+          data: JSON.stringify({
+            code: '' + code
+          }),
+          method: 'POST',
+          header: {
+            'content-type': 'application/json;charset=utf-8'
+          },
+          success: function (data) {
+            console.log(data)
+            _this.unitedPayRequest(data.data.msg)
+            console.log(_this.createTimeStamp())
+          },
+          fail: function (res) {
+            console.log('获取openId失败:' + res)
+          }
+        })
+      },
+      unitedPayRequest: function (openId) {
+        let _this = this
+        _this.openId = openId
+        console.log(_this.openId)
+        // let nonceStr = _this.randomString()
+        let totalFee = parseInt(0.01 * 100)
+        console.log(totalFee)
+        wx.request({
+          url: 'http://localhost:8088/system/pay/ltaPay',
+          data: JSON.stringify({
+            openId: '' + openId,
+            total_fee: '' + totalFee
+          }),
+          method: 'POST',
+          header: {
+            'content-type': 'application/json;charset=utf-8'
+          },
+          success: function (data) {
+            console.log(data)
+            _this.processPay(data.data.data)
+            console.log(data.data.data)
+          }
+        })
+      },
+      processPay: function (data) {
+        wx.requestPayment({
+          nonceStr: data.nonceStr,
+          package: data.package,
+          signType: data.signType,
+          paySign: data.sign,
+          timeStamp: data.timeStamp,
+          success: function (res) {
+            // success
+            console.log('wx.requestPayment返回信息:' + res)
+            wx.showModal({
+              title: '支付成功',
+              content: '您将在“微信支付”官方号中收到支付凭证',
+              showCancle: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('confirm')
+                } else if (res.cancle) {
+                  console.log('cancle')
+                }
+              }
+            })
+          }
+        })
+      },
+      randomString: function () {
+        var chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678'
+        var maxPos = chars.length
+        var nonceVal = ''
+        for (var i = 0; i < 32; i++) {
+          nonceVal += chars.charAt(Math.random() * maxPos)
+        }
+        return nonceVal
+      },
+      createTimeStamp () {
+        return parseInt(new Date().getTime() / 1000) + ''
       },
       closePayFull (status) {
         this.payShow = status

@@ -12,32 +12,32 @@
       v-for="(item, index) in commdityOrder"
       :key="index">
         <i-cell-group>
-          <i-cell :title="item.shopShopname">
-            <i-icon
+          <i-cell :title="item.commdityOrderName" :value="item.orderStatus === 0 ? '待支付' : item.orderStatus === 1 ? '已完成' : '已取消'" :label="item.createTime">
+            <!-- <i-icon
               @click="DeltoggleFull(index)"
               slot="footer"
               type="delete_fill"
               color="#d9644c"
-              size="18" />
+              size="18" /> -->
             <!--<i-icon slot="footer" type="delete" color="#d9644c" />-->
           </i-cell>
 
-            <!-- <i-cell
-              v-for="(itemChild, indexChild) in item.commdityOrderShopping"
+            <i-cell
+              v-for="(itemChild, indexChild) in item.orderDetailList"
+              i-class="foodDetailCss"
               :key="indexChild"
               :title="itemChild.commodityName"
-              :value=" ' ￥' + (itemChild.commodityMoney) + ' 共' + (itemChild.commoditySum) + '件' ">
-
-            </i-cell> -->
+              :value=" (itemChild.foodTitle) + ' 共' + (itemChild.foodSum) + '件' ">
+            </i-cell>
 
           <!-- <i-cell title="配送费" :value="item.commdityOrderActual < 10 ? 1 : 0"></i-cell> -->
           <!-- <i-cell title="优惠金额" :value="item.commdityOrderOffer"></i-cell> -->
           <!-- <i-cell title="需要支付" :value="item.commdityOrderActual"></i-cell> -->
           <!-- <i-cell title="实际支付" :value="item.commdityOrderSumPrice"></i-cell> -->
-          <i-cell title="配送地址"
-                  :value="item.shopMobile"
-                  :label="item.userName +','+item.userAddress"></i-cell>
-          <i-cell title="下单时间" :value="item.createTime"></i-cell>
+          <i-cell title="收货地址"
+                  :value="item.mobile"
+                  :label="item.userName +','+item.address"></i-cell>
+          <i-cell i-class="actualClass" title="支付金额" :value=" '￥' + item.commdityOrderActual"></i-cell>
         </i-cell-group>
       </div>
 
@@ -166,6 +166,7 @@
 
 
 
+
 .delOrderContainer{
   height: 100%;
 }
@@ -230,4 +231,14 @@
   }
 }
 
+</style>
+<style lang="css">
+.foodDetailCss{
+  color: #717171;
+  font-size: 14px;
+  line-height: 40rpx;
+}
+.actualClass{
+  font-weight: bold;
+}
 </style>
