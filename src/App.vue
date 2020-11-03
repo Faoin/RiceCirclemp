@@ -45,7 +45,7 @@ export default {
               let _openId = data.data.msg
               _this.openId = _openId
               // this.globalData.openid = _this.openId
-              if (_openId === null) {
+              if (_openId === 'NoExist') {
                 wx.navigateTo({
                   url: '/pages/login/main'
                 })

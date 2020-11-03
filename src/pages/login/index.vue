@@ -10,7 +10,7 @@
           <text>获得你的公开信息(昵称，头像等)</text>
       </view>
   
-      <button class='bottom' type='primary' lang="zh_CN" open-type="getUserInfo" @getuserinfo="bindGetUserInfo">
+      <button class='bottom' type='primary' open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">
           授权登录
       </button>
     </view>
@@ -28,6 +28,42 @@ export default {
     // }
   },
   methods: {
+    getPhoneNumber: function (e) {
+      console.log(e)
+      console.log(e.target.errMsg)
+      console.log(e.target.encryptedData)
+      console.log(e.target.iv)
+      wx.login({
+        success: res => {
+          console.log(res.code)
+          wx.request({
+            url: 'http://localhost:8088/system/admin_user/getUserPhoneBymp',
+            data: JSON.stringify({
+              'encryptedData': '' + e.target.encryptedData,
+              'iv': '' + e.target.iv,
+              'code': '' + res.code
+            }),
+            method: 'POST',
+            header: {
+              'content-type': 'application/json;charset=utf-8'
+            },
+            success: function (res) {
+              console.log(res)
+              if (res.data.msg === 'AjaxSuccess') {
+                wx.switchTab({
+                  url: '/pages/index/main'
+                })
+              } else if (res.data.msg === 'AjaxError') {
+                console.log('用户未授权！跳转到pages/login/main')
+                wx.navigateTo({
+                  url: '/pages/login/main'
+                })
+              }
+            }
+          })
+        }
+      })
+    },
     bindGetUserInfo (e) {
       // 点击授权按钮后跳转回主页面
       wx.login({

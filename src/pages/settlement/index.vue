@@ -277,6 +277,9 @@ export default {
               success: function (res) {
                 if (res.confirm) {
                   console.log('confirm')
+                  wx.switchTab({
+                    url: '/pages/order/main'
+                  })
                 } else if (res.cancle) {
                   console.log('cancle')
                 }
