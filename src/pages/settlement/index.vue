@@ -270,7 +270,7 @@ export default {
         _this.openId = openId
         console.log(_this.openId)
         // let nonceStr = _this.randomString()
-        let totalFee = parseInt(0.01 * 100)
+        let totalFee = _this.commdityOrders.commdityOrderSumPrice
         console.log(totalFee)
         wx.request({
           url: 'http://localhost:8088/system/pay/ltaPay',
