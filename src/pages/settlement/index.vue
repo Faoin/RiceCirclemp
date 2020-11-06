@@ -204,6 +204,29 @@ export default {
       /* 微信支付 */
       pay () {
         let _this = this
+        if (_this.setUserOrderAddres.userName === null) {
+          this.tipsMessage.status = true
+          setTimeout(function () {
+            _this.tipsMessage.status = false
+          }, 500)
+          return false
+        }
+        this.commdityOrders.commdityOrderName = this.commdityShoppingName
+        this.commdityOrders.commdityOrderShopping = this.commdityShopping
+        this.commdityOrders.commdityOrderOffer = this.randomSum
+        this.commdityOrders.commdityOrderActual = this.commdityRealSumPrice
+        this.commdityOrders.commdityOrderSumPrice = this.commditySumPriceYH
+        this.commdityOrders.commdityOrderUserAddress = this.setUserOrderAddres
+        this.$store.dispatch('setCommdityOrder', this.commdityOrders)
+        console.log('name:' + this.commdityOrders.commdityOrderName + 'Offer:' + this.commdityOrders.commdityOrderOffer)
+        console.log(this.commdityOrders)
+        // console.log(JSON.parse(JSON.stringify(this.commdityOrders)))
+        let commdityList = this.commdityOrders.commdityOrderShopping
+        _this.commdityOrdersDetails = JSON.parse(JSON.stringify(commdityList))
+        _this.commdityOrders = this.commdityOrders
+        console.log(_this.commdityOrdersDetails)
+        console.log(_this.commdityOrdersDetails[0].foodId)
+        console.log(_this.commdityOrders.commdityOrderUserAddress.id)
         wx.login({
           complete: (res) => {
             if (res.code) {
@@ -218,9 +241,13 @@ export default {
       getOpenId: function (code) {
         let _this = this
         wx.request({
-          url: 'http://localhost:8088/system/order/payOrderByMpRc',
+          url: 'http://localhost:8088/system/order/addOrderByUserId',
           data: JSON.stringify({
-            code: '' + code
+            code: '' + code,
+            commdityOrders: _this.commdityOrders,
+            commdityOrderUserAddress: _this.commdityOrders.commdityOrderUserAddress,
+            commdityShopping: _this.commdityOrders.commdityOrderShopping,
+            shopInfoId: '' + _this.commdityOrdersDetails[0].shopInfoId
           }),
           method: 'POST',
           header: {
@@ -228,7 +255,9 @@ export default {
           },
           success: function (data) {
             console.log(data)
-            _this.unitedPayRequest(data.data.msg)
+            _this.orderCode = data.data.data.orderCode
+            console.log(_this.orderCode)
+            _this.unitedPayRequest(data.data.data.openid)
             console.log(_this.createTimeStamp())
           },
           fail: function (res) {
@@ -261,6 +290,8 @@ export default {
         })
       },
       processPay: function (data) {
+        let _this = this
+        console.log(_this.orderCode)
         wx.requestPayment({
           nonceStr: data.nonceStr,
           package: data.package,
@@ -277,8 +308,20 @@ export default {
               success: function (res) {
                 if (res.confirm) {
                   console.log('confirm')
-                  wx.switchTab({
-                    url: '/pages/order/main'
+                  wx.request({
+                    url: 'http://localhost:8088/system/order/updateOrderByOrderCode',
+                    data: JSON.stringify({
+                      code: '' + _this.orderCode
+                    }),
+                    method: 'POST',
+                    header: {
+                      'content-type': 'application/json;charset=utf-8'
+                    },
+                    success: function (data) {
+                      wx.switchTab({
+                        url: '/pages/order/main'
+                      })
+                    }
                   })
                 } else if (res.cancle) {
                   console.log('cancle')

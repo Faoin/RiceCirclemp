@@ -12,7 +12,7 @@
       v-for="(item, index) in commdityOrder"
       :key="index">
         <i-cell-group>
-          <i-cell :title="item.commdityOrderName" :value="item.orderStatus === 0 ? '待支付' : item.orderStatus === 1 ? '已完成' : '已取消'" :label="item.createTime">
+          <i-cell :title="item.commdityOrderName" :value="item.orderStatus === 0 ? '未支付' : item.orderStatus === 1 ? '已支付' : '已取消'" :label="item.createTime">
             <!-- <i-icon
               @click="DeltoggleFull(index)"
               slot="footer"
