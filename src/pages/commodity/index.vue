@@ -307,7 +307,7 @@ export default {
     getCommodityList (index) {
       let _this = this
       console.log('获取index展示商品列表')
-      fly.get('http://localhost:8088/system/food/getFood4ShopList?id=' + index)
+      fly.get('https://fquano.cn/system/food/getFood4ShopList?id=' + index)
         .then(function (response) {
           if (response.status === 200) {
             let shopListArr = response.data.data

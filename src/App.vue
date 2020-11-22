@@ -33,7 +33,7 @@ export default {
           console.log(res.code)
           // 判断用户是否已存在系统
           wx.request({
-            url: 'http://localhost:8088/system/admin_user/getUserById',
+            url: 'https://fquano.cn/system/admin_user/getUserById',
             data: ({
               code: '' + res.code
             }),

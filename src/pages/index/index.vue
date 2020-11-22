@@ -107,7 +107,7 @@ export default {
     getMerchant () {
       console.log('获取店铺列表')
       let _this = this
-      fly.get('http://localhost:8088/system/info/getShopList')
+      fly.get('https://fquano.cn/system/info/getShopList')
         .then(function (response) {
           if (response.status === 200) {
             let merchantArr = response.data.rows

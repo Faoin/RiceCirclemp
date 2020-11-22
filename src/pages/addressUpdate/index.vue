@@ -81,7 +81,7 @@ export default {
       console.log(1233)
       console.log(this.addressUser.index)
       wx.request({
-        url: 'http://localhost:8088/system/receiver/getUserReceiverAddrById',
+        url: 'https://fquano.cn/system/receiver/getUserReceiverAddrById',
         data: JSON.stringify({
           index: this.addressUser.index
         }),
@@ -104,7 +104,7 @@ export default {
         // this.addressClear()
         console.log(this.addressUser)
         wx.request({
-          url: 'http://localhost:8088/system/receiver/updateUserReceiverAddrById',
+          url: 'https://fquano.cn:80/system/receiver/updateUserReceiverAddrById',
           data: JSON.stringify({
             id: '' + this.addressUser.id,
             userId: '' + this.addressUser.userId,
@@ -164,7 +164,7 @@ export default {
         // this.$store.dispatch('delUserAddress', this.addressUser.id)
         console.log(this.addressUser.id)
         wx.request({
-          url: 'http://localhost:8088/system/receiver/delUserReceiverAddrById',
+          url: 'https://fquano.cn:80/system/receiver/delUserReceiverAddrById',
           data: JSON.stringify({
             index: this.addressUser.id
           }),

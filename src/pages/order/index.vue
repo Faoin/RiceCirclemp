@@ -81,7 +81,7 @@
       wx.login({
         complete: (res) => {
           wx.request({
-            url: 'http://localhost:8088/system/order/getOrderByUserId',
+            url: 'https://fquano.cn/system/order/getOrderByUserId',
             data: JSON.stringify({
               code: '' + res.code
             }),

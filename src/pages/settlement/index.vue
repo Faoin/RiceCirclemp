@@ -170,7 +170,7 @@ export default {
         wx.login({
           complete: (res) => {
             wx.request({
-              url: 'http://localhost:8088/system/order/addOrderByUserId',
+              url: 'https://fquano.cn/system/order/addOrderByUserId',
               data: JSON.stringify({
                 code: res.code,
                 commdityOrders: _this.commdityOrders,
@@ -241,7 +241,7 @@ export default {
       getOpenId: function (code) {
         let _this = this
         wx.request({
-          url: 'http://localhost:8088/system/order/addOrderByUserId',
+          url: 'https://fquano.cn/system/order/addOrderByUserId',
           data: JSON.stringify({
             code: '' + code,
             commdityOrders: _this.commdityOrders,
@@ -273,7 +273,7 @@ export default {
         let totalFee = _this.commdityOrders.commdityOrderSumPrice
         console.log(totalFee)
         wx.request({
-          url: 'http://localhost:8088/system/pay/ltaPay',
+          url: 'https://fquano.cn/system/pay/ltaPay',
           data: JSON.stringify({
             openId: '' + openId,
             total_fee: '' + totalFee
@@ -309,7 +309,7 @@ export default {
                 if (res.confirm) {
                   console.log('confirm')
                   wx.request({
-                    url: 'http://localhost:8088/system/order/updateOrderByOrderCode',
+                    url: 'https://fquano.cn/system/order/updateOrderByOrderCode',
                     data: JSON.stringify({
                       code: '' + _this.orderCode
                     }),
@@ -355,7 +355,7 @@ export default {
         console.log(this.userOrderAddres)
         let _this = this
         wx.request({
-          url: 'http://localhost:8088/system/receiver/getUserReceiverAddrById',
+          url: 'https://fquano.cn/system/receiver/getUserReceiverAddrById',
           data: JSON.stringify({
             index: this.userOrderAddres
           }),

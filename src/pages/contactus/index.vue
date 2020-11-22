@@ -33,7 +33,7 @@ export default {
     getContactUsList () {
       console.log('获取客服列表')
       let _this = this
-      fly.get('http://localhost:8088/system/contact/getContactList')
+      fly.get('https://fquano.cn/system/contact/getContactList')
         .then(function (response) {
           if (response.status === 200) {
             console.log(response)

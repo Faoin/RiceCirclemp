@@ -37,7 +37,7 @@ export default {
         success: res => {
           console.log(res.code)
           wx.request({
-            url: 'http://localhost:8088/system/admin_user/getUserPhoneBymp',
+            url: 'https://fquano.cn/system/admin_user/getUserPhoneBymp',
             data: JSON.stringify({
               'encryptedData': '' + e.target.encryptedData,
               'iv': '' + e.target.iv,
@@ -79,7 +79,7 @@ export default {
                     success: function (res3) {
                       var userNick = res3.userInfo.nickName
                       wx.request({
-                        url: 'http://localhost:8088/system/admin_user/getCode',
+                        url: 'https://fquano.cn:80/system/admin_user/getCode',
                         data: JSON.stringify({
                           code: '' + res1.code,
                           userNick: userNick

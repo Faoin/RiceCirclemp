@@ -33,7 +33,7 @@ export default {
     getContactShopList () {
       console.log('获取商家列表')
       let _this = this
-      fly.get('http://localhost:8088/system/info/getShopListAll')
+      fly.get('https://fquano.cn/system/info/getShopListAll')
         .then(function (response) {
           if (response.status === 200) {
             console.log(response)

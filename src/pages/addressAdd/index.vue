@@ -69,7 +69,7 @@ export default {
         wx.login({
           complete: (res) => {
             wx.request({
-              url: 'http://localhost:8088/system/receiver/addUserReceiverAddrByOpenId',
+              url: 'https://fquano.cn/system/receiver/addUserReceiverAddrByOpenId',
               data: JSON.stringify({
                 code: '' + res.code,
                 userName: '' + this.addressUser.userName,
