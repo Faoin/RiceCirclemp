@@ -271,6 +271,7 @@ export default {
         console.log(_this.openId)
         // let nonceStr = _this.randomString()
         let totalFee = _this.commdityOrders.commdityOrderSumPrice
+        // let totalFee = 1
         console.log(totalFee)
         wx.request({
           url: 'https://fquano.cn/system/pay/ltaPay',
@@ -308,10 +309,16 @@ export default {
               success: function (res) {
                 if (res.confirm) {
                   console.log('confirm')
+                  console.log(_this.commdityOrderUserAddress)
                   wx.request({
                     url: 'https://fquano.cn/system/order/updateOrderByOrderCode',
                     data: JSON.stringify({
-                      code: '' + _this.orderCode
+                      code: '' + _this.orderCode,
+                      telephone: '' + _this.commdityOrders.commdityOrderUserAddress.mobile,
+                      address: '' + _this.commdityOrders.commdityOrderUserAddress.address,
+                      shopInfoId: '' + _this.commdityOrdersDetails[0].shopInfoId,
+                      foodId: '' + _this.commdityOrdersDetails[0].foodId,
+                      commoditySum: '' + _this.commdityOrdersDetails[0].commoditySum
                     }),
                     method: 'POST',
                     header: {
